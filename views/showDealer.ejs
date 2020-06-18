@@ -1,0 +1,59 @@
+<%- include("partials/header")%>
+<%- include("partials/sidenav")%>
+
+<!-- <div class="container-fluid"> -->
+    <!-- <div class="d-flex flex-row bd-highlight mt-3">
+        <span class="head bd-highlight">Name</span>
+        <div class="head bd-highlight">Phone</div>
+        <div class="head bd-highlight">Email</div>
+    </div>
+    <% dealers.forEach((dealer) => {  %>
+        <span class="d-flex flex-row bd-highlight">
+            <span class="content bd-highlight"><%=dealer.dealername%></span>
+            <div class="content bd-highlight"><%=dealer.dealeremail%></div>
+            <div class="content bd-highlight"><%=dealer.dealercontact%></div>
+        </span>
+   <% }) %>   
+</div> -->
+<section class="page-content">
+
+<div class="grid modules">
+    <div id="dealers">
+      <table class="dealer_table">
+          <tr><th class="title" colspan="4">YOUR DEALERS</th></tr>
+          <tr style= "background-color: lightblue;" class="text-center">
+              <th>Company Name</th>
+              <th>Dealer Name</th>
+              <th>Email</th>
+              <th>Contact</th>
+          </tr>
+          <% dealers.forEach((dealer) => {  %> 
+                <tr class="pop" tabindex="0" data-toggle="popover" data-trigger="focus" title="Popover title" data-placement="bottom" 
+                data-content="And here's some amazing content. It's very engaging. Right?">
+                    <span class="dealerdetail"></span>
+                    <td><%=dealer.companyname%></td>
+                    <td><%=dealer.fname%> <%=dealer.lname%></td>
+                    <td><%=dealer.email%></td>
+                    <td>
+                        <%=dealer.contact%> 
+                        <span class="deleteicon">
+                            <form method="POST" action="/dealer/<%=dealer._id%>?_method=DELETE">
+                                <button type="submit"><i class="fas fa-trash"></i></button>
+                            </form>
+                        </span>
+                    </td>
+                    </span>
+    
+                </tr> 
+            </button>
+            
+        <%  })  %>
+          
+        </table>
+    </div>
+    </div>
+  <a href="/dealer/new">Add new Dealer</a>
+  
+  </section>
+
+<%- include("partials/footer")%>

@@ -1,0 +1,84 @@
+<%- include("partials/header") %>
+<%- include("partials/sidenav") %>
+
+
+<!-- <div id="homeid">
+	<ul class="nav nav-pills fill nav-bottom-spacing flex-column">
+		<li class="nav-item">
+			<a>Customers</a>
+		</li>
+		<li class="nav-item">
+			<a>Vendors</a>
+		</li>
+
+	</ul>
+</div> -->
+
+	<div  class="container-fluid">
+		<section class="page-content">
+    
+			<section class="search-and-user">
+			  
+			  <div class="admin-profile">
+				<span class="greeting">Dashboard</span>
+				<div class="notifications">
+				  
+				  <svg>
+					<use xlink:href="#users"></use>
+				  </svg>
+				</div>
+			  </div>
+			</section>
+		
+			<div class="grid modules">
+			  <div id="summary">
+				<table class="table_summary">
+				  <tr><th colspan="5" class="title">SUMMARY</th></tr>
+				  <tr style="background-color: gainsboro;">
+					<th>Delivered</th>
+					<th>Shipped</th>
+					<th>Finished</th>
+					<th>In-Process</th>
+					<th>Pending</th>
+				  </tr>
+				  <tr>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+				  </tr>
+				</table>
+			  </div>
+			  <div id="issues">
+				<table>
+				  <tr><th class="title">COMPLAINTS</th></tr>
+				  <tr><td>No Complaints Currently</td></tr>
+				</table>
+			  </div>
+			  <div id="stock_inventory">
+				<table>
+				  <tr><th class="title" colspan="2">STOCK INVENTORY</th></tr>
+				  <tr>
+					<th style="width: 50%;">Categories</td>
+					<td>8</td>
+				  </tr>
+				  <tr>
+					<th>Low Stock</td>
+					<td>3</td>
+				  </tr>
+				  <tr style="color: red;">
+					<th>Stock Exhausted</td>
+					<td>1</td>
+				  </tr>
+				</table>
+			  </div>
+			  <div></div>
+			  <div></div>
+			  <div></div>
+			</div> 
+
+
+<%- include("partials/footer") %>
+
+

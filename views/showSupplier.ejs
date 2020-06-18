@@ -1,0 +1,41 @@
+<%- include("partials/header")%>
+<%- include("partials/sidenav")%>
+
+<section class="page-content">
+<div class="grid modules">
+    <div id="dealers">
+      <table>
+          <tr><th class="title" colspan="4">YOUR SUPPLIERS</th></tr>
+          <tr style= "background-color: lightblue;" class="text-center">
+              <th>Company Name</th>
+              <th>Supplier Name</th>
+              <th>Email</th>
+              <th>Contact</th>
+          </tr>
+          <% suppliers.forEach((supplier) => {  %>
+            <span>
+                <tr>
+                    <td><%=supplier.companyname%></td>
+                    <td><%=supplier.fname%> <%=supplier.lname%></td>
+                    <td><%=supplier.email%></td>
+                    <td>
+                        <%=supplier.contact%>
+                        <span class="deleteicon">
+                            <form method="POST" action="/supplier/<%=supplier._id%>?_method=DELETE">
+                                <button type="submit"><i class="fas fa-trash"></i></button>
+                            </form>
+                        </span>
+                    </td>
+                </tr> 
+            <span>
+        <%  })  %>
+          
+        </table>
+    </div>
+
+  </div>
+  <a href="/supplier/new">Add new Supplier</a>
+
+  </section>
+
+<%- include("partials/footer")%>
