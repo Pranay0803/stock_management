@@ -1,27 +1,10 @@
-<%- include("partials/header") %>
+<%- include("partials/stockheader") %>
 <%- include("partials/sidenav") %>
 
+
 <section class="page-content">
-        
-  <section class="search-and-user">
-    
-    <div class="admin-profile">
-      <span class="greeting">Logout</span>
-      <div class="notifications">
-        
-        <svg>
-          <use xlink:href="#users"></use>
-        </svg>
-      </div>
-    </div>
-  </section>
 
 <div>
-  <div style="font-size: 1.7rem; margin-bottom: 1rem;"> 
-    <a href="#" data-toggle="popover" data-trigger="hover" data-content="Add New Category" data-placement="right" 
-    ><span class="fa fa-plus"></span></a>
-  </div>
-  
   <div class="dropdown">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         STOCK CATEGORIES
@@ -33,83 +16,88 @@
         <a class="dropdown-item" href="#">Category 3</a>
       </div>
       </div> -->
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <li><a class="dropdown-item" data-name="1" href="#">Category 1</a></li>
-        <li><a class="dropdown-item" data-name="2" href="#">Category 2</a></li>
-        <li><a class="dropdown-item" data-name="3" href="#">Category 3</a></li>
+      <div name="drop" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <% categories.forEach((category) => { %>
+          <li><a class="dropdown-item" value="<%=category.name%>" href="/stocks/category?name=<%=category.name%>"><%=category.name%></a></li>
+        <%  })  %>
       </div>           
   </div>           
-</div>   
+</div>  
 
-<div id="stock_info">
-  <header class="category_heading">Category Name</header>
-  <div class="container">
-    <div class="row">
-    <div class="stock_summary col-lg-7 col-12">
-      <header class="title">Stocks Summary</header>
-    <table id="stocks_table">
-      <tr>
-        <th>Stocks Bought</th>
-        <td id="stocks_bought">100</td>
-      </tr>
-      <tr>
-        <th>Stocks In-Use</th>
-        <td id="stocks_in_use">80</td>
-      </tr>
-      <tr>
-        <th>Stocks Remaining</th>
-        <td id="stocks_remaining">20</td>
-      </tr>
-    </table>
-    </div>
-    <div class="stock_productions col-lg-5 col-12">
-      <div style=" line-height: 2.5; margin-top: 0.7rem;">
-        <div style="font-size: 1.5rem;">Used In</div>
-        <div id="productions_data" style="font-size:2.5rem; color: red;">7</div>
-        <div style="font-size: 1.5rem;"> Productions</div>
-      </div>
-    </div>
-  </div>
-  </div>
-
-    <div class="container stock_dealers">
-      <header class="title" style="font-size: 1.6rem;">Stock Dealers</header>
-      <div class="row">
-      <div class="col-lg-6 col-12">
-        <div class="dealers">Mukesh Ambani</div>
-      </div>
-      <div class="col-lg-6 col-12">
-        <div class="dealers">Mukesh Ambani</div>
-      </div>
-
-      <div class="col-lg-6 col-12">
-        <div class="dealers">Mukesh Ambani</div>
-      </div>
-      <div class="col-lg-6 col-12">
-        <div class="dealers">Mukesh Ambani</div>
+<%  Records.forEach((record) => {   %>
+ <% if(record.category == selectedCategory) {   %>
+    <div id="stock_info">
+      <header class="category_heading"><%=record.category%></header>
+      <div class="container">
+        <div class="row">
+        <div class="stock_summary col-lg-7 col-12">
+          <header class="title">Stocks Summary</header>
+        <table id="stocks_table">
+          <tr>
+            <th>Stocks Bought</th>
+            <td id="stocks_bought">100</td> 
+          </tr>
+          <tr>
+            <th>Stocks In-Use</th>
+            <td id="stocks_in_use">80</td>
+          </tr>
+          <tr>
+            <th>Stocks Remaining</th>
+            <td id="stocks_remaining">20</td>
+          </tr>
+        </table>
+        </div>
+        <div class="stock_productions col-lg-5 col-12">
+          <div style=" line-height: 2.5; margin-top: 0.7rem;">
+            <div style="font-size: 1.5rem;">Used In</div>
+            <div id="productions_data" style="font-size:2.5rem; color: red;">7</div>
+            <div style="font-size: 1.5rem;"> Productions</div>
+          </div>
+        </div>
       </div>
       </div>
-    </div>   
     
-    <div class="container payment_status">
-      <header class="title" style="font-size: 1.6rem;">Payment &nbsp;Status</header>
-      <div class="row">
-        <div class="col-lg-6 col-12">
-          <div class="amount" style="border-color: darkgreen;">
-            Amount Paid <br>
-            <span>&#8377;</span> <span id="amt_paid"> 10,000/- </span>
+        <div class="container stock_dealers">
+          <header class="title" style="font-size: 1.6rem;">Stock Dealers</header>
+          <div class="row">
+
+            <div class="col-lg-6 col-12">
+              <div class="dealers"><%=record.dealer%></div>
+            </div>
+            <!-- <div class="col-lg-6 col-12">
+              <div class="dealers">Mukesh Ambani</div>
+            </div>
+      
+            <div class="col-lg-6 col-12">
+              <div class="dealers">Mukesh Ambani</div>
+            </div>
+            <div class="col-lg-6 col-12">
+              <div class="dealers">Mukesh Ambani</div>
+            </div> -->
+          </div>
+        </div>   
+        
+        <div class="container payment_status">
+          <header class="title" style="font-size: 1.6rem;">Payment &nbsp;Status</header>
+          <div class="row">
+            <div class="col-lg-6 col-12">
+              <div class="amount" style="border-color: darkgreen;">
+                Amount Paid <br>
+                <span>&#8377;</span> <span id="amt_paid"> 10,000/- </span>
+              </div>
+            </div>
+    
+            <div class="col-lg-6 col-12">
+              <div class="amount" style="border-color: maroon;">
+                Amount Pending <br>
+                <span>&#8377;</span> <span id="amt_pending"> 20,000/- </span>
+              </div>
+            </div>
+    
           </div>
         </div>
-
-        <div class="col-lg-6 col-12">
-          <div class="amount" style="border-color: maroon;">
-            Amount Pending <br>
-            <span>&#8377;</span> <span id="amt_pending"> 20,000/- </span>
-          </div>
-        </div>
-
-      </div>
     </div>
-</div>
+<%  }  })     %>
+
 </section>
 <%- include("partials/footer") %>

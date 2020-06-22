@@ -28,8 +28,20 @@
               <th>Contact</th>
           </tr>
           <% dealers.forEach((dealer) => {  %> 
-                <tr class="pop" tabindex="0" data-toggle="popover" data-trigger="focus" title="Popover title" data-placement="bottom" 
-                data-content="And here's some amazing content. It's very engaging. Right?">
+            <tr class="pop" tabindex="0" data-html="true" data-toggle="popover" data-trigger="focus" title="<%=dealer.fname%> <%=dealer.lname%>" data-placement="bottom" 
+                data-content="
+                <p> 
+                    <b>Company Name:</b> <%= dealer.companyname%> </br>
+                    <b>Category    :</b> <%= dealer.category%> </br>
+                    <b>Email       :</b> <%= dealer.email%>  </br>
+                    <b>Website     :</b> <%= dealer.website%>  </br>
+                    <b>Address     :</b> <%= dealer.address%> </br>
+                    <b>City        :</b> <%= dealer.city%>  </br>
+                    <b>State       :</b> <%= dealer.state%>  </br>
+                    <b>Zipcode     :</b> <%= dealer.zip%>  </br>
+                    <b>Contact No. :</b> <%= dealer.contact%> 
+                 </p> 
+                ">
                     <span class="dealerdetail"></span>
                     <td><%=dealer.companyname%></td>
                     <td><%=dealer.fname%> <%=dealer.lname%></td>
@@ -42,7 +54,7 @@
                             </form>
                         </span>
                     </td>
-                    </span>
+                    
     
                 </tr> 
             </button>

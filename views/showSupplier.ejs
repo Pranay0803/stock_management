@@ -13,8 +13,22 @@
               <th>Contact</th>
           </tr>
           <% suppliers.forEach((supplier) => {  %>
-            <span>
-                <tr>
+                
+                <tr class="pop" tabindex="0" data-html="true" data-toggle="popover" data-trigger="focus" title="<%=supplier.fname%> <%=supplier.lname%>" data-placement="bottom" 
+                    data-content="
+                        <p> 
+                           <b>Company Name:</b> <%= supplier.companyname%> </br>
+                           <b>Category    :</b> <%= supplier.category%> </br>
+                           <b>Email       :</b> <%= supplier.email%>  </br>
+                           <b>Website     :</b> <%= supplier.website%>  </br>
+                           <b>Address     :</b> <%= supplier.address%> </br>
+                           <b>City        :</b> <%= supplier.city%>  </br>
+                           <b>State       :</b> <%= supplier.state%>  </br>
+                           <b>Zipcode     :</b> <%= supplier.zip%>  </br>
+                           <b>Contact No. :</b> <%= supplier.contact%> 
+                        </p>  
+                    ">
+                    <span class="dealerdetail"></span>
                     <td><%=supplier.companyname%></td>
                     <td><%=supplier.fname%> <%=supplier.lname%></td>
                     <td><%=supplier.email%></td>

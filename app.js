@@ -10,7 +10,9 @@ var express = require("express"),
 
 var User = require("./models/user"),
     Dealer = require("./models/dealer"),
+    Category = require("./models/category"),
     Supplier = require("./models/supplier");
+    Record = require("./models/records");
 
 //mongoose.connect("mongodb://localhost:27017/website")
 mongoose.connect("mongodb+srv://Aznan:Aznan@1234@cluster0-vryyw.mongodb.net/stockmanagement?retryWrites=true&w=majority", {
@@ -49,6 +51,8 @@ app.use(methodOverride("_method"))
 app.use(express.static(__dirname + '/public'));
 app.use((req, res, next) => {
     res.locals.currentUser = req.user
+    res.locals.allcategory = req.category
+    res.locals.alldealer = req.dealer
     next()
 })
 
@@ -67,6 +71,7 @@ app.post("/dealer/new", (req, res) => {
         companyname: req.body.companyname,
         fname: req.body.fname,
         lname: req.body.lname,
+        category: req.body.category,
         address: req.body.address,
         city: req.body.city,
         state: req.body.state,
@@ -92,14 +97,13 @@ app.post("/supplier/new", (req, res) => {
         companyname: req.body.companyname,
         fname: req.body.fname,
         lname: req.body.lname,
+        category: req.body.category,
         address: req.body.address,
         city: req.body.city,
         state: req.body.state,
         zip: req.body.zip,
         email: req.body.email,
-          
-        
-          contact: req.body.contact,
+        contact: req.body.contact,
         website: req.body.website  
     }
     Supplier.create(newSupplier, (err, newsupplier) => {
@@ -156,8 +160,93 @@ app.delete("/supplier/:id/", (req, res) => {
     })
 })
 app.get("/stocks", (req, res) => {
-    res.render("showstocks")
+    const categ = "Automobile";
+    Category.find({}, (err, category) => {
+        if(err) {
+            console.log(err);
+        } else {
+            Record.find({}, (err, record) => {
+                if(err) {
+                    console.log(err);
+                    res.redirect("/stocks");
+                } else {
+                    // res.render("showstocks", {selectedCategory: categ, Records: record})
+                    res.render("showstocks", {categories: category, selectedCategory: categ, Records: record})
+                }
+            })
+        }
+    })
 }) 
+app.get("/stocks/category", (req, res) => {
+    const categ = req.query.name;
+    Record.find({}, (err, record) => {
+        if(err) {
+            console.log(err);
+            res.redirect("/stocks");
+        } else {
+            Category.find({}, (err, category) => {
+                if(err) {
+                    console.log(err);
+                    res.redirect("/stocks");
+                } else {
+                    res.render("showstocks", {selectedCategory: categ, Records: record, categories: category})
+                }
+            })
+        }
+    })
+})
+app.get("/stocks/newcategory", (req, res) => {
+    res.render("newcategory")
+}) 
+app.get("/stocks/newrecords", (req, res) => {
+    Category.find({}, (err, category) => {
+        if(err) {
+            console.log(err);
+            res.redirect("/stocks");
+        } else {
+            Dealer.find({}, (err, dealer) => {
+                if(err) {
+                    console.log(err);
+                    res.redirect("/stocks");
+                } else {
+                    res.render("newrecord", {dealers: dealer, categories: category})
+                }
+            })
+        }
+    })
+})
+
+app.post("/stocks/newrecords", (req, res) => {
+    
+    const newrecord = {
+        dealer: req.body.dealer,
+        category: req.body.category,
+        quantity: req.body.quantity,
+        amount: req.body.amount,
+        TransactionDate: req.body.date
+    }
+    Record.create(newrecord, (err, record) => {
+        if(err) {
+            console.log(err);
+            res.redirect("/stocks");
+        } else {
+            res.redirect("/stocks")
+        }
+    })
+})
+
+app.post("/stocks/newcategory", (req, res) => {
+    Category.create( {name: req.body.name}, (err, category) => {
+        if(err) {
+            console.log(err);
+        } else {
+            res.redirect("/stocks")
+        }
+    })
+})
+
+
+
 app.get("/register", (req, res) => {
     res.render("register")
 })

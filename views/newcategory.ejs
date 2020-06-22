@@ -1,0 +1,20 @@
+<%-include("partials/header") %>
+<div class="container">
+	<div class="row">
+        <div style="width:30%; margin:20px auto ">
+            <h2 class="mb-3" style="text-align:center">Add a new Category</h2>
+			<form action="/stocks/newcategory" method="POST">
+				<div class="form-group">
+                    <label for="Category Name">Category Name</label>
+					<input class="form-control" type="text" name="name" id="Category Name" required>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-lg btn-primary" type="submit">Submit</button>
+				</div>
+			</form>
+			<a href="/stocks">Go Back</a>
+		</div>
+		
+    </div>
+    
+    <%-include("partials/footer") %>

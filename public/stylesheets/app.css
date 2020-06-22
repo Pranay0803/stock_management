@@ -9,7 +9,7 @@ body {
   display: inline-block;
 	transition : 0.2s linear;
   opacity: 0.0;
-  float: right;
+  
 }
 #eg {
   background-color: white;
@@ -20,13 +20,14 @@ tr:hover td span {
 }
 #homeid {
     margin-top: 4rem;
+    
 }
 /* The side navigation menu */
 .sidenav {
     height: 100%; /* 100% Full-height */
     width: 0; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
+    z-index: 9; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
     background-color: #212529; 
@@ -185,3 +186,8 @@ tr:hover td span {
       border-left: none;
     }
   }
+
+   /* New category button styling */
+   .categ-but {
+     margin-left: 6rem;
+   }
