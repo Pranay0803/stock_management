@@ -1,0 +1,84 @@
+body {
+	background-color: #000;
+}
+
+#landing-header {
+	color: #000;
+	z-index: 1;
+	position: relative;
+	text-align: center;
+	padding-top: 40vh;
+}
+.slideshow { 
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  list-style: none; 
+  margin: 0;
+  padding: 0;
+}	
+
+.slideshow li { 
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  z-index: 0;
+  animation: imageAnimation 50s linear infinite; 
+}
+
+.slideshow li:nth-child(1) { 
+  background-image: url("../images/landing.jpg") 
+}
+.slideshow li:nth-child(2) { 
+  background-image: url("../images/landing1.jpg");
+  animation-delay: 20s; 
+}
+
+@keyframes imageAnimation { 
+  0% { 
+    opacity: 0; 
+    animation-timing-function: ease-in;
+  }
+  10% {
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+  20% {
+    opacity: 1
+  }
+  30% {
+    opacity: 0
+  }
+}
+  
+/* header */
+.nav-head{
+  max-width: 70%;
+  min-height: 50px;
+  margin: 3rem auto;
+  background-color: cornsilk;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  float: left;
+  display: block;
+  text-align: center;
+  padding-left: 10px;
+}
+
+	

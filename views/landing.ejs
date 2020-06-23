@@ -1,2 +1,45 @@
-<h2>LANDING PAGE</h2>
-<a href="/home">Go to home</a>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Stock Management</title>
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+		<link rel="stylesheet" href="/stylesheets/landing.css">
+		<!-- <link rel="stylesheet" href="/stylesheets/dash.css"> -->
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
+	</head>
+	<body>
+
+		<div class="nav-head">
+			<img id="logo" src=""></img>
+			<ul>
+				<li>ABOUT</li>
+				<li>CONTACT</li>
+			</ul>
+		</div>
+		
+		<div class="container" style = "margin-left: 220px; margin-right: 220px; margin-top: 40px">
+			<%	if(success && success.length > 0) {   %>
+					<div class="alert alert-success" role="alert"><%=success%></div>
+			<%	}    %>
+			<%	if(error && error.length > 0) {    %>
+					<div class="alert alert-danger" role="alert"><%=error%></div>
+			<%	}   %>
+		</div>
+		
+		<div id="landing-header">
+			<h1>TO BE EDITED</h1>
+		   <a href="/home" class="btn btn-lg btn-success">Go to home</a>
+	   </div>
+	   
+	   <ul class="slideshow">
+		 <li></li>
+		 <li></li>
+	   </ul>
+    </body>
+
+</html>
+
+
+
+

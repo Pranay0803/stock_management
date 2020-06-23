@@ -3,6 +3,7 @@ var express = require("express"),
 	app = express(),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
+    flash = require("connect-flash"),
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"),
@@ -13,6 +14,8 @@ var User = require("./models/user"),
     Category = require("./models/category"),
     Supplier = require("./models/supplier");
     Record = require("./models/records");
+
+var middleware = require("./middleware");
 
 //mongoose.connect("mongodb://localhost:27017/website")
 mongoose.connect("mongodb+srv://Aznan:Aznan@1234@cluster0-vryyw.mongodb.net/stockmanagement?retryWrites=true&w=majority", {
@@ -32,6 +35,7 @@ mongoose.connect("mongodb+srv://Aznan:Aznan@1234@cluster0-vryyw.mongodb.net/stoc
 // })
 
 app.use(bodyParser.urlencoded({extended: false}))
+app.use(flash())
 
 //passport configurations
 app.use(require("express-session")({
@@ -51,22 +55,23 @@ app.use(methodOverride("_method"))
 app.use(express.static(__dirname + '/public'));
 app.use((req, res, next) => {
     res.locals.currentUser = req.user
-    res.locals.allcategory = req.category
-    res.locals.alldealer = req.dealer
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
     next()
 })
+
 
 //=======Routes==============
 app.get("/", (req, res) => {
     res.render("landing")
 })
-app.get("/home", (req, res) => {
+app.get("/home", middleware.isLoggedIn, (req, res) => {
 	res.render("home")
 })
-app.get("/dealer/new", (req, res) => {
+app.get("/dealer/new",  middleware.isLoggedIn, (req, res) => {
     res.render("newdealer")
 })
-app.post("/dealer/new", (req, res) => {
+app.post("/dealer/new",  middleware.isLoggedIn, (req, res) => {
     const newDealer = {
         companyname: req.body.companyname,
         fname: req.body.fname,
@@ -82,17 +87,19 @@ app.post("/dealer/new", (req, res) => {
     }
     Dealer.create(newDealer, (err, newdealer) => {
         if(err) {
-            console.log(err) 
+            req.flash("error", err.message)
+            res.redirect("/home") 
         } else {
+            req.flash("success", "Added a new Dealer")
             res.redirect("/home")
         }
     })
 })
 
-app.get("/supplier/new", (req, res) => {
+app.get("/supplier/new",  middleware.isLoggedIn, (req, res) => {
     res.render("newsupplier")
 })
-app.post("/supplier/new", (req, res) => {
+app.post("/supplier/new",  middleware.isLoggedIn, (req, res) => {
     const newSupplier = {
         companyname: req.body.companyname,
         fname: req.body.fname,
@@ -108,105 +115,128 @@ app.post("/supplier/new", (req, res) => {
     }
     Supplier.create(newSupplier, (err, newsupplier) => {
         if(err) {
-            console.log(err) 
+            req.flash("error", err.message)
+            res.redirect("/home")
         } else {
+            req.flash("success", "Added a new Dealer")
             res.redirect("/home")
         }
     })
 })
 
-app.get("/dealer", (req, res) => {
+app.get("/dealer",  middleware.isLoggedIn, (req, res) => {
     Dealer.find({}, (err, dealers) => {
         if(err) {
-            console.log(err)
+            req.flash("error", err.message)
+            res.redirect("/home")
         } else {
             res.render("showDealer", {dealers: dealers})
         }
     })  
 })
 
-app.get("/supplier", (req, res) => {
+app.get("/supplier", middleware.isLoggedIn, (req, res) => {
     Supplier.find({}, (err, suppliers) => {
         if(err) {
-            console.log(err)
+            req.flash("error", err.message)
+            res.redirect("/home")
         } else {
             res.render("showSupplier", {suppliers: suppliers})
         }
     })  
 })
 
-app.delete("/dealer/:id/", (req, res) => {
+app.delete("/dealer/:id/", middleware.isLoggedIn, (req, res) => {
     Dealer.findById(req.params.id, (err, dealer) => {
         if(err) {
-            console.log(err);
+            req.flash("error", err.message)
             res.redirect("/dealer");
         } else {
             dealer.remove();
+            req.flash("success", "Successfully Removed Dealer !!")
             res.redirect("/dealer");
         }
     })
 })
 
-app.delete("/supplier/:id/", (req, res) => {
+app.delete("/supplier/:id/", middleware.isLoggedIn, (req, res) => {
     Supplier.findById(req.params.id, (err, supplier) => {
         if(err) {
-            console.log(err);
+            req.flash("error", err.message)
             res.redirect("/supplier");
         } else {
-            console.log(supplier)
             supplier.remove();
+            req.flash("success", "Successfully Removed Supplier !!")
             res.redirect("/supplier");
         }
     })
 })
-app.get("/stocks", (req, res) => {
+app.get("/stocks", middleware.isLoggedIn, (req, res) => {
+    var dealer = [];
+    var amount = 0;
+    var quantity = 0;
     const categ = "Automobile";
     Category.find({}, (err, category) => {
         if(err) {
-            console.log(err);
+            req.flash("error", err.message)
+            res.redirect("/home");;
         } else {
-            Record.find({}, (err, record) => {
+            Record.find({category: categ}, (err, records) => {
                 if(err) {
-                    console.log(err);
+                    req.flash("error", err.message)
                     res.redirect("/stocks");
                 } else {
-                    // res.render("showstocks", {selectedCategory: categ, Records: record})
-                    res.render("showstocks", {categories: category, selectedCategory: categ, Records: record})
+                    records.forEach((record) => {
+                        dealer.push(record.dealer) ;
+                        amount += record.amount;
+                        quantity += record.quantity;
+                    })
+                    res.render("showstocks", {categories: category, selectedCateg: categ, dealer: dealer, payment: amount, quantity: quantity})
                 }
             })
         }
     })
 }) 
-app.get("/stocks/category", (req, res) => {
+
+app.get("/stocks/category", middleware.isLoggedIn, (req, res) => {
+    var dealer = [];
+    var amount = 0;
+    var quantity = 0;
     const categ = req.query.name;
-    Record.find({}, (err, record) => {
+    Record.find({category: categ}, (err, records) => {
         if(err) {
-            console.log(err);
+            req.flash("error", err.message)
             res.redirect("/stocks");
         } else {
             Category.find({}, (err, category) => {
                 if(err) {
-                    console.log(err);
+                    req.flash("error", err.message)
                     res.redirect("/stocks");
                 } else {
-                    res.render("showstocks", {selectedCategory: categ, Records: record, categories: category})
+                    records.forEach((record) => {
+                        dealer.push(record.dealer) ;
+                        amount += record.amount;
+                        quantity += record.quantity;
+                    })
+                    res.render("showstocks", {categories: category, selectedCateg: categ, dealer: dealer, payment: amount, quantity: quantity})
                 }
             })
         }
     })
 })
-app.get("/stocks/newcategory", (req, res) => {
+
+app.get("/stocks/newcategory", middleware.isLoggedIn, (req, res) => {
     res.render("newcategory")
 }) 
-app.get("/stocks/newrecords", (req, res) => {
+app.get("/stocks/newrecords", middleware.isLoggedIn, (req, res) => {
     Category.find({}, (err, category) => {
         if(err) {
-            console.log(err);
+            req.flash("error", err.message)
             res.redirect("/stocks");
         } else {
             Dealer.find({}, (err, dealer) => {
                 if(err) {
-                    console.log(err);
+                    req.flash("error", err.message)
                     res.redirect("/stocks");
                 } else {
                     res.render("newrecord", {dealers: dealer, categories: category})
@@ -216,7 +246,7 @@ app.get("/stocks/newrecords", (req, res) => {
     })
 })
 
-app.post("/stocks/newrecords", (req, res) => {
+app.post("/stocks/newrecords", middleware.isLoggedIn, (req, res) => {
     
     const newrecord = {
         dealer: req.body.dealer,
@@ -227,19 +257,22 @@ app.post("/stocks/newrecords", (req, res) => {
     }
     Record.create(newrecord, (err, record) => {
         if(err) {
-            console.log(err);
+            req.flash("error", err.message)
             res.redirect("/stocks");
         } else {
+            req.flash("success", "New Record Added !!")
             res.redirect("/stocks")
         }
     })
 })
 
-app.post("/stocks/newcategory", (req, res) => {
+app.post("/stocks/newcategory", middleware.isLoggedIn, (req, res) => {
     Category.create( {name: req.body.name}, (err, category) => {
         if(err) {
-            console.log(err);
+            req.flash("error", err.message)
+            res.redirect("/stocks")
         } else {
+            req.flash("success", "New category successfully added !!")
             res.redirect("/stocks")
         }
     })
@@ -254,10 +287,11 @@ app.post("/register", (req, res) => {
     const newUser = new User({username: req.body.username})
     User.register(newUser, req.body.password, function(err, user) {
         if(err) {
-            console.log(err)
+            req.flash("error", err.message)
             res.redirect("/register")
         } else {
             passport.authenticate("local")(req, res, function() {
+                req.flash("success", "Welcome "+ user.username+" !!")
                 res.redirect("/home")
             })
         }
@@ -277,6 +311,7 @@ app.post("/login", passport.authenticate("local", {
 
 app.get("/logout", (req, res) => {
     req.logout()
+    req.flash("success", "Successfully logged out !!")
     res.redirect("/")
 })
     

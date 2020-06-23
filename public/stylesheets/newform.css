@@ -1,0 +1,7 @@
+body {
+    background-color: lightblue;
+    background-image: url("../images/form.jpg");
+    background-size: cover;
+    color: forestgreen;
+    height: 400; /* You must set a specified height */ 
+}

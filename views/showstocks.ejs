@@ -24,10 +24,8 @@
   </div>           
 </div>  
 
-<%  Records.forEach((record) => {   %>
- <% if(record.category == selectedCategory) {   %>
     <div id="stock_info">
-      <header class="category_heading"><%=record.category%></header>
+      <header class="category_heading"><%=selectedCateg%></header>
       <div class="container">
         <div class="row">
         <div class="stock_summary col-lg-7 col-12">
@@ -35,15 +33,15 @@
         <table id="stocks_table">
           <tr>
             <th>Stocks Bought</th>
-            <td id="stocks_bought">100</td> 
+            <td id="stocks_bought"><%=quantity%></td> 
           </tr>
           <tr>
             <th>Stocks In-Use</th>
-            <td id="stocks_in_use">80</td>
+            <td id="stocks_in_use">0</td>
           </tr>
           <tr>
             <th>Stocks Remaining</th>
-            <td id="stocks_remaining">20</td>
+            <td id="stocks_remaining"><%=quantity%></td>
           </tr>
         </table>
         </div>
@@ -60,20 +58,12 @@
         <div class="container stock_dealers">
           <header class="title" style="font-size: 1.6rem;">Stock Dealers</header>
           <div class="row">
-
+          <% dealer.forEach((dealer) => {   %>
             <div class="col-lg-6 col-12">
-              <div class="dealers"><%=record.dealer%></div>
+              <div class="dealers"><%=dealer%></div>
             </div>
-            <!-- <div class="col-lg-6 col-12">
-              <div class="dealers">Mukesh Ambani</div>
-            </div>
-      
-            <div class="col-lg-6 col-12">
-              <div class="dealers">Mukesh Ambani</div>
-            </div>
-            <div class="col-lg-6 col-12">
-              <div class="dealers">Mukesh Ambani</div>
-            </div> -->
+          <%   })   %>
+            
           </div>
         </div>   
         
@@ -83,21 +73,20 @@
             <div class="col-lg-6 col-12">
               <div class="amount" style="border-color: darkgreen;">
                 Amount Paid <br>
-                <span>&#8377;</span> <span id="amt_paid"> 10,000/- </span>
+                <span>&#8377;</span> <span id="amt_paid"> <%=payment%>/- </span>
               </div>
             </div>
     
             <div class="col-lg-6 col-12">
               <div class="amount" style="border-color: maroon;">
                 Amount Pending <br>
-                <span>&#8377;</span> <span id="amt_pending"> 20,000/- </span>
+                <span>&#8377;</span> <span id="amt_pending"> 0/- </span>
               </div>
             </div>
     
           </div>
         </div>
     </div>
-<%  }  })     %>
 
 </section>
 <%- include("partials/footer") %>
