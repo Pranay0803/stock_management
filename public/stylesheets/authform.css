@@ -2,6 +2,6 @@ body {
     background-color: lightblue;
     background-image: url("../images/authform.jpg");
     background-size: cover;
-    color: rgb(240, 240, 248);
     height: 400; /* You must set a specified height */ 
+    color: black;
 }

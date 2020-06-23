@@ -243,6 +243,27 @@ body {
   border-left: maroon 40px solid;
   overflow:auto;
 }
+#dealers-dash{
+  padding-top: 20px;
+  border-left: 40px solid coral;
+  overflow:auto;
+  font-size: 4rem;
+  color: maroon;
+}
+#suppliers-dash{
+  padding-top: 20px;
+  border-left: 40px solid mediumvioletred;
+  overflow:auto;
+  font-size: 4rem;
+  color: maroon;
+}
+#turnover-dash{
+  padding-top: 20px;
+  background-color: moccasin;
+  overflow:auto;
+  font-size: 4rem;
+  color: maroon;
+}
 #stock_inventory{
   border-left:darkcyan 40px solid;
   height: auto;
@@ -416,3 +437,4 @@ th,td{
   color: var(--red);
 }
 }
+

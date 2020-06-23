@@ -1,0 +1,68 @@
+<%- include("partials/salesheader") %>
+<%- include("partials/sidenav") %>
+
+
+<section class="page-content">
+    <div class="grid modules">
+        <div id="turnover">
+            <div class="title" style="font-size: 2.5rem; color: aliceblue;">TOTAL <br> TURNOVER </div> 
+            <div class="turnover_data"><span>&#8377;</span> <span id="turnover_amt">500000000</span> /- </div>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select Period
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" data-name="1" href="/stocks/sales?name=Yearly">Yearly</a></li>
+            <li><a class="dropdown-item" data-name="2" href="/stocks/sales?name=Monthly">Monthly</a></li>
+            <li><a class="dropdown-item" data-name="3" href="/stocks/sales?name=Weekly">Weekly</a></li>
+        </div>           
+    </div>
+
+    <div id="sales">
+        <table id="sales-table" class="table table-striped">
+            <tr>
+                <th colspan="2" id="period"><%=option%></th>
+            </tr>
+           <% categories.forEach((category) => {   %>
+                <tr>
+                    <th>
+                        <%=category.name%>
+                    </th>
+                    <td>
+                        90,000/-
+                    </td>
+                </tr>
+            <%   })    %>
+            <!-- <tr>
+                <th>
+                    Category 1
+                </th>
+                <td>
+                    90,000/-
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Category 1
+                </th>
+                <td>
+                    90,000/-
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Category 1
+                </th>
+                <td>
+                    90,000/-
+                </td>
+            </tr> -->
+        </table>
+    </div>
+
+</section>
+
+<%- include("partials/footer") %>

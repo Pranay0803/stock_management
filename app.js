@@ -1,6 +1,6 @@
 require("dotenv").config
 var express = require("express"),
-	app = express(),
+    app = express(),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
     flash = require("connect-flash"),
@@ -39,9 +39,9 @@ app.use(flash())
 
 //passport configurations
 app.use(require("express-session")({
-	secret: "Fav is SRK",
-	resave: false,
-	saveUninitialized: false
+    secret: "Fav is SRK",
+    resave: false,
+    saveUninitialized: false
 }));
 
 app.use(passport.initialize())
@@ -66,8 +66,60 @@ app.get("/", (req, res) => {
     res.render("landing")
 })
 app.get("/home", middleware.isLoggedIn, (req, res) => {
-	res.render("home")
+    Dealer.find({}, (err, dealer) => {
+        if(err) {
+            console.log(err);
+            res.redirect("/")
+        } else {
+            Supplier.find({}, (err, supplier) => {
+                if(err) {
+                    console.log(err);
+                    res.redirect("/")
+                } else {
+                    const dealerscount = Object.keys(dealer).length;
+                    const supplierscount = Object.keys(supplier).length;
+                    console.log(supplierscount);
+                    console.log(dealerscount)
+                    res.render("home", {dealerscount: dealerscount, supplierscount: supplierscount})
+                }
+            })
+        }
+    })
+    
 })
+app.get("/sales", middleware.isLoggedIn, (req, res) => {
+    Category.find({}, (err, category) => {
+        if(err) {
+            req.flash("error", err.message)
+            res.redirect("/sales");
+        } else {
+            res.render("sales", {categories: category, option: "Yearly"})
+        }
+    })
+})
+app.get("/stocks/sales", middleware.isLoggedIn, (req, res) => {
+    var dealer = [];
+    var amount = 0;
+    var quantity = 0;
+    const option = req.query.name;
+    // Record.find({category: categ}, (err, records) => {
+    //     if(err) {
+    //         req.flash("error", err.message)
+    //         res.redirect("/stocks");
+    //     } else {
+            Category.find({}, (err, category) => {
+                if(err) {
+                    req.flash("error", err.message)
+                    res.redirect("/sales");
+                } else {
+                    res.render("sales", {categories: category, option: option})
+                }
+            })
+//         }
+     })
+// })
+
+
 app.get("/dealer/new",  middleware.isLoggedIn, (req, res) => {
     res.render("newdealer")
 })
@@ -319,5 +371,5 @@ app.get("/logout", (req, res) => {
 
 
 app.listen(3000, () => {
-	console.log("Server started")
+    console.log("Server started")
 })

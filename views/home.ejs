@@ -2,8 +2,7 @@
 <%- include("partials/sidenav") %>
 
 	<div  class="container-fluid">
-		<section class="page-content">
-		
+		<section class="page-content">	
 			<div class="grid modules">
 			  <div id="summary">
 				<table class="table_summary">
@@ -16,11 +15,11 @@
 					<th>Pending</th>
 				  </tr>
 				  <tr>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
+					<td>2</td>
+					<td>3</td>
+					<td>5</td>
+					<td>8</td>
+					<td>2</td>
 				  </tr>
 				</table>
 			  </div>
@@ -35,21 +34,44 @@
 				  <tr><th class="title" colspan="2">STOCK INVENTORY</th></tr>
 				  <tr>
 					<th style="width: 50%;">Categories</td>
-					<td>8</td>
+					<td>3</td>
 				  </tr>
 				  <tr>
 					<th>Low Stock</td>
-					<td>3</td>
+					<td>1</td>
 				  </tr>
 				  <tr style="color: red;">
 					<th>Stock Exhausted</td>
-					<td>1</td>
+					<td>0</td>
 				  </tr>
 				</table>
 			  </div>
-			  <div></div>
-			  <div></div>
-			  <div></div>
+			  <!-- dealerscount
+			  supplierscount -->
+			  
+			  <div id="dealers-dash">
+				  <!--<h2 class="title"> No. Of Dealers</h2>
+				  <div><%= dealerscount %></div>-->
+				  <table>
+					<tr><th class="title">No. Of Dealers</th></tr>
+					<tr><td><%= dealerscount %></td></tr>
+				  </table>
+			  </div>
+			  <div id="suppliers-dash">
+				<!--<h2 class="title"> No. Of Suppliers</h2>
+				<div><%= supplierscount %></div>-->
+				<table>
+					<tr><th class="title">No. Of Suppliers</th></tr>
+					<tr><td><%= supplierscount %></td></tr>
+				</table>
+			</div>
+
+			  <div id="turnover-dash">
+				<table>
+					<tr><th class="title">Total Turnover</th></tr>
+					<tr><td><span>&#8377;</span>500000000</td></tr>
+				</table>
+			  </div>
 			</div> 
 
 			</section>

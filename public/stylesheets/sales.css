@@ -1,0 +1,41 @@
+/* styles for sales page */
+
+.title{
+    padding-top: 2.5rem;
+    font-size: 40px;
+    background-color: #233557;
+    color: white;
+    width: 50%;
+  }
+  
+  .turnover_data{
+    font-size: 3.5rem;
+    width: 100%;
+    background-color: gainsboro;
+    text-align: center;
+    padding-top: 3rem;
+  }
+  
+  #sales-table{
+    margin: 2rem auto;
+    width: 100%;
+    padding: 5rem;
+    background-color: whitesmoke;
+    border: 2px solid #233557;
+  }
+  .dropdown{
+    margin: 2rem 0;
+    
+  }
+  #sales{
+    height: auto;
+    
+  }
+  #sales-table th,td{
+  
+    padding: 0.5rem;
+    text-align: center;
+    font-size: 1.2rem;
+    margin: 1rem;
+    color: darkmagenta;
+  }
